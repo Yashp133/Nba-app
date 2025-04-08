@@ -1,6 +1,5 @@
 'use client';
 import Navbar from '@/components/navbar';
-import DarkModeToggle from '@/components/darkmodetoggle';
 
 export default function Settings() {
   return (
@@ -11,7 +10,6 @@ export default function Settings() {
       <div className="space-y-4">
         <div className="p-4 bg-secondary rounded shadow">
           <h2 className="text-xl font-semibold mb-2">Appearance</h2>
-          <DarkModeToggle />
         </div>
 
         <div className="p-4 bg-secondary rounded shadow">

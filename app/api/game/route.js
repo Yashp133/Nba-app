@@ -29,7 +29,7 @@ export async function GET() {
         return diffA - diffB; // Sort by smallest score difference
       });
   
-      const last3Games = sortedGames.slice(0, 3); // Get the top 3 games with the smallest score difference
+      const last3Games = sortedGames.slice(0, 30); // Get the top 3 games with the smallest score difference
   
       return new Response(JSON.stringify(last3Games), {
         status: 200,

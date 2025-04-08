@@ -1,161 +1,117 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Navbar from "@/components/navbar";
-import "../styles/globals.css"
+import Image from "next/image";
+import teamLogos from "@/utils/teamLogo";
+
 
 export default function Home() {
   const [games, setGames] = useState([]);
-
-  // Define the team logos object
-  const teamLogos = {
-    "atl": "atlanta_hawks.png",
-    "bos": "boston_celtics.png",
-    "brooklyn": "brooklyn_nets.png",
-    "cha": "charlotte_hornets.png",
-    "chi": "chicago_bulls.png",
-    "cle": "cleveland_cavaliers.png",
-    "dal": "dallas_mavericks.png",
-    "den": "denver_nuggets.png",
-    "det": "detroit_pistons.png",
-    "gsw": "golden_state_warriors.png",
-    "hou": "houston_rockets.png",
-    "ind": "indiana_pacers.png",
-    "lac": "la_clippers.png",
-    "lakers": "los_angeles_lakers.png",
-    "mem": "memphis_grizzlies.png",
-    "mia": "miami_heat.png",
-    "mil": "milwaukee_bucks.png",
-    "min": "minnesota_timberwolves.png",
-    "no": "new_orleans_pelicans.png",
-    "nyk": "new_york_knicks.png",
-    "okc": "oklahoma_city_thunder.png",
-    "orlando": "orlando_magic.png",
-    "phi": "philadelphia_76ers.png",
-    "phoenix": "phoenix_suns.png",
-    "portland": "portland_trail_blazers.png",
-    "sac": "sacramento_kings.png",
-    "san": "san_antonio_spurs.png",
-    "tor": "toronto_raptors.png",
-    "utah": "utah_jazz.png",
-    "wash": "washington_wizards.png",
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const gamesPerPage = 3;
 
   useEffect(() => {
     const fetchGames = async () => {
-      try {
-        // Get today's date and the date from a week ago
-        const today = new Date();
-        const lastWeek = new Date(today);
-        lastWeek.setDate(today.getDate() - 7);
-
-        // Format the dates to YYYY-MM-DD format
-        const todayFormatted = today.toISOString().split("T")[0];
-        const lastWeekFormatted = lastWeek.toISOString().split("T")[0];
-
-        const res = await fetch(
-          `/api/game?start_date=${lastWeekFormatted}&end_date=${todayFormatted}` // Pass the date range to the backend
-        );
-
-        console.log("API Response Status:", res.status); // Check response status
-        
-        if (!res.ok) {
-          throw new Error("Failed to fetch games data");
-        }
-
-        const data = await res.json();
-        console.log("Fetched games data:", data);
-
-        if (data && data.length > 0) {
-          setGames(data);
-        } else {
-          console.error("No games data found");
-        }
-      } catch (err) {
-        console.error("Error fetching recent games:", err);
-      }
+      const today = new Date();
+      const lastWeek = new Date(today);
+      lastWeek.setDate(today.getDate() - 7);
+      const res = await fetch(
+        `/api/game?start_date=${lastWeek.toISOString().split("T")[0]}&end_date=${today.toISOString().split("T")[0]}`
+      );
+      const data = await res.json();
+      setGames(data || []);
     };
-
     fetchGames();
   }, []);
 
-  return (
-    <div className="min-h-screen bg-primary text-white px-4 py-8">
-      <Navbar />
-      <h1 className="text-3xl font-bold mb-4 items-center gap-10 mt-5">NBA App</h1>
-      <p className="text-lg items-center">Stay updated with NBA teams, players, and games!</p>
-      <div className="flex flex-col justify-center items-center gap-12 mt-12">
-        {/* MVP Section */}
-        <div className="flex flex-col items-center text-center border border-white p-4">
-          <h2 className="text-2xl font-semibold mb-4">🏆 Reigning MVP</h2>
-          <Image
-            src="https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png"
-            alt="Nikola Jokic"
-            width={200}
-            height={200}
-            className="rounded-full border-4 border-gray-700"
-          />
-          <p className="text-xl font-semibold mt-4">Nikola Jokić</p>
-          <p className="text-sm text-gray-300">Denver Nuggets</p>
-          <p className="text-sm text-gray-400">2023–24 Season</p>
-        </div>
+  const totalPages = Math.ceil(games.length / gamesPerPage);
+  const startIndex = (currentPage - 1) * gamesPerPage;
+  const currentGames = games.slice(startIndex, startIndex + gamesPerPage);
 
-        {/* Recent Games Section */}
-        <div className="border border-white p-4">
-          <h2 className="text-xl font-semibold mb-4">Last 3 Games Played This Season</h2>
-          <table className="w-full text-left text-sm">
+  const handlePrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const handleNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+
+  return (
+    <div className="bg-white text-black min-h-screen">
+      <Navbar />
+
+      {/* Schedule ticker */}
+      <div className="w-full bg-blue-100 overflow-x-auto whitespace-nowrap py-2 px-4 text-sm text-blue-800 font-medium border-b border-blue-300">
+        {games.length > 0 ? (
+          games.slice(0, 10).map((game, index) => (
+            <span key={index} className="mr-6 inline-block">
+              {game.home_team.abbreviation} vs {game.visitor_team.abbreviation} — {game.home_team_score}:{game.visitor_team_score}
+            </span>
+          ))
+        ) : (
+          <span>Loading schedule...</span>
+        )}
+      </div>
+
+      {/* Hero */}
+      <section className="text-center py-16 border-b border-gray-200">
+        <h1 className="text-5xl font-bold text-black mb-4">🏀 NBA Central Hub</h1>
+        <p className="text-lg text-gray-600 mb-6">Live scores, player stats, and headlines — all in one place</p>
+      </section>
+
+      {/* MVP Section */}
+      <div className="flex flex-col items-center text-center border border-white p-4">
+        <h2 className="text-2xl font-semibold mb-4">🏆 Reigning MVP</h2>
+        <Image
+          src="https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png"
+          alt="Nikola Jokic"
+          width={200}
+          height={200}
+          className="rounded-full border-4 border-gray-700"
+        />
+        <p className="text-xl font-semibold mt-4">Nikola Jokić</p>
+        <p className="text-sm text-gray-300">Denver Nuggets</p>
+        <p className="text-sm text-gray-400">2023–24 Season</p>
+      </div>
+
+      {/* Recent Games Section */}
+      <section className="px-6 py-12 bg-gray-100">
+        <h2 className="text-3xl font-bold mb-6"> Recent Games This Season</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm bg-white shadow-md rounded-lg">
             <thead>
-              <tr className="text-gray-400 border-b border-gray-600">
-                <th className="py-2 pr-6">Home Team</th>
-                <th className="py-2 pr-6">Visitor Team</th>
-                <th className="py-2 px-2">Score</th>
-                <th className="py-2 px-2">Date</th>
+              <tr className="bg-blue-100 text-blue-800">
+                <th className="py-3 px-4 text-left">Home Team</th>
+                <th className="py-3 px-4 text-left">Visitor Team</th>
+                <th className="py-3 px-4 text-left">Score</th>
+                <th className="py-3 px-4 text-left">Date</th>
               </tr>
             </thead>
             <tbody>
-              {games.length > 0 ? (
-                games.map((game, index) => {
-                  // Get team logos dynamically
+              {currentGames.length > 0 ? (
+                currentGames.map((game, index) => {
                   const homeTeamLogo = teamLogos[game.home_team.abbreviation.toLowerCase()];
                   const visitorTeamLogo = teamLogos[game.visitor_team.abbreviation.toLowerCase()];
 
                   return (
-                    <tr
-                      key={index}
-                      className="border-b border-gray-700 hover:bg-secondary/30"
-                    >
-                      <td className="py-2 pr-6">
+                    <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
+                      <td className="py-3 px-4">
                         <div className="flex items-center">
-                          <img
-                            src={`/logos/${homeTeamLogo}`} // Dynamically load the home team logo
-                            alt={game.home_team.full_name}
-                            className="w-6 h-6 mr-2" // Ensure consistent size for logos
-                          />
+                          <img src={`/logos/${homeTeamLogo}`} alt={game.home_team.full_name} className="w-6 h-6 mr-2" />
                           {game.home_team.full_name}
                         </div>
                       </td>
-                      <td className="py-2 pr-6">
+                      <td className="py-3 px-4">
                         <div className="flex items-center">
-                          <img
-                            src={`/logos/${visitorTeamLogo}`} // Dynamically load the visitor team logo
-                            alt={game.visitor_team.full_name}
-                            className="w-6 h-6 mr-2" // Ensure consistent size for logos
-                          />
+                          <img src={`/logos/${visitorTeamLogo}`} alt={game.visitor_team.full_name} className="w-6 h-6 mr-2" />
                           {game.visitor_team.full_name}
                         </div>
                       </td>
-                      <td className="py-2 px-2">
+                      <td className="py-3 px-4">
                         {game.home_team_score} - {game.visitor_team_score}
                       </td>
-                      <td className="py-2 px-2">
-                        {new Date(game.date).toLocaleDateString()}
-                      </td>
+                      <td className="py-3 px-4">{new Date(game.date).toLocaleDateString()}</td>
                     </tr>
                   );
                 })
               ) : (
                 <tr>
-                  <td colSpan="4" className="py-2 text-center text-gray-400">
+                  <td colSpan="4" className="py-6 text-center text-gray-500">
                     Loading recent games...
                   </td>
                 </tr>
@@ -163,7 +119,30 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-      </div>
+
+        {/* Pagination Controls */}
+        {games.length > gamesPerPage && (
+          <div className="flex justify-center items-center mt-6 space-x-4">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="text-sm text-gray-600">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </section>
     </div>
   );
 }
