@@ -174,7 +174,7 @@ export default function GamesPage() {
                       <strong>City:</strong> {game.arena?.city || "N/A"}
                     </p>
                     <p>
-                      <strong>League:</strong> {game.league.name}
+                      <strong>League:</strong> {game.league}
                     </p>
                   </div>
                 )}
