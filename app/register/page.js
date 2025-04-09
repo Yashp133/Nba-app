@@ -3,24 +3,23 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/navbar';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    const res = await fetch('/api/login', {
+    const res = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
 
-    const data = await res.json();
     if (res.ok) {
-      localStorage.setItem('token', data.token);
-      alert('Login success!');
-      router.push('/');
+      alert('Registration successful!');
+      router.push('/login');
     } else {
+      const data = await res.json();
       alert(data.error);
     }
   };
@@ -29,8 +28,8 @@ export default function LoginPage() {
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', color: '#000' }}>
       <Navbar />
       <div style={{ maxWidth: '400px', margin: '3rem auto', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>🔐 Login</h1>
-        <form onSubmit={handleLogin} style={{ marginTop: '2rem' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>📝 Register</h1>
+        <form onSubmit={handleRegister} style={{ marginTop: '2rem' }}>
           <input
             type="text"
             placeholder="Username"
@@ -73,7 +72,7 @@ export default function LoginPage() {
               cursor: 'pointer',
             }}
           >
-            Login
+            Register
           </button>
         </form>
       </div>
