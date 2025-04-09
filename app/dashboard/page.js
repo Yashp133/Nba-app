@@ -20,21 +20,20 @@ export default function Dashboard() {
     try {
       const decoded = jwt.verify(token, SECRET);
       setUser(decoded);
-    } catch (error) {
-      console.error('Invalid token:', error);
+    } catch {
+      console.error('Invalid token');
       localStorage.removeItem('jwt');
       router.push('/login');
     }
 
-    // If you have an API fetch with error handling, here's how to handle it:
+    // If you're not using the API response data, remove the assignment
     const fetchData = async () => {
       try {
         const response = await fetch('/api/some-endpoint');
-        const data = await response.json();
-        // handle data
-      } catch (error) {
-        console.error('API Error:', error);
-        // handle error
+        // Remove the unused 'data' variable if you're not using it
+        await response.json(); // Just parsing without assignment
+      } catch {
+        console.error('API Error');
       }
     };
 
