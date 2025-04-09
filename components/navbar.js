@@ -16,7 +16,7 @@ export default function Navbar() {
         const decoded = jwt.decode(token);
         setIsLoggedIn(true);
         setUsername(decoded?.username || '');
-      } catch (err) {
+      } catch {
         console.error('Invalid token');
         setIsLoggedIn(false);
         setUsername('');
