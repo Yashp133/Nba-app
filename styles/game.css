@@ -1,0 +1,106 @@
+.nba-container {
+    background-color: #ffffff;
+    color: #000000;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .nba-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .nba-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 1.5rem;
+  }
+  
+  .nba-search input {
+    padding: 0.5rem;
+    width: 250px;
+    border: 2px solid #007bff;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  .nba-search button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .nba-search {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .nba-game-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nba-game-card {
+    background-color: #f0f0f0;
+    border-left: 6px solid red;
+    border-right: 6px solid blue;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: left;
+  }
+  
+  .nba-game-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team {
+    font-weight: bold;
+    color: #111;
+  }
+  
+  .nba-status {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .nba-score {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 0.3rem;
+  }
+  
+  .nba-loading,
+  .nba-no-data {
+    color: #999;
+    font-size: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .nba-pagination {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .nba-pagination button {
+    padding: 0.4rem 1rem;
+    background-color: #ff3b3b;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
