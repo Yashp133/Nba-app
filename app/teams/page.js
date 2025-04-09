@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/navbar";
 import teamLogos from "@/utils/teamLogo";
+import FavoriteButton from '@/components/FavoriteButton';
 
 const RAPID_API_KEY = "e8434fb59emsh8d5b49690eb5083p1c39e3jsnded0e4cb31b1";
 const BASE_URL = "https://api-nba-v1.p.rapidapi.com";
@@ -186,6 +187,7 @@ export default function TeamsPage() {
                   </p>
                 </div>
               )}
+              <FavoriteButton item={team} category="teams" />
             </div>
           ))}
         </div>
