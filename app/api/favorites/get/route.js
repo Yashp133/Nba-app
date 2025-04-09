@@ -21,7 +21,7 @@ export async function GET(req) {
         players: user.favorites.players || [],
         teams: user.favorites.teams || []
       });
-    } catch (err) {
+    } catch {
       return NextResponse.json({ error: 'Token invalid or expired' }, { status: 403 });
     }
-  }
+}
