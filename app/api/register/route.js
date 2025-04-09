@@ -1,5 +1,5 @@
 // /api/signup/route.js
-import { connectDB } from '@/lib/mongo';
+import { connectDB } from '../../../lib/mongo';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
