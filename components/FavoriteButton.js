@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function FavoriteButton({ item, category }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,54 +21,71 @@ export default function FavoriteButton({ item, category }) {
 
         if (res.ok) {
           const data = await res.json();
-          const favorites = data[category] || [];
-          const exists = favorites.some(fav => fav.id === item.id);
+          const exists = (data[category] || []).some(fav => fav.id === item.id);
           setAdded(exists);
         }
       } catch (err) {
-        console.error('Failed to check favorites', err);
+        console.error('Check favorite failed:', err);
       }
     };
 
     checkFavorite();
   }, [category, item]);
 
-  const handleAdd = async () => {
+  const handleClick = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to add favorites.');
+      alert('Please log in.');
       return;
     }
 
-    const res = await fetch('/api/favorites/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ category, item })
-    });
+    const url = added ? '/api/favorites/delete' : '/api/favorites/add';
+    const body = added
+      ? { category, itemId: item.id }
+      : { category, item };
 
-    if (res.ok) {
-      setAdded(true);
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        setAdded(!added);
+      }
+    } catch (err) {
+      console.error('Favorite toggle failed:', err);
     }
   };
 
   return (
     <button
-      onClick={handleAdd}
-      disabled={!isLoggedIn || added}
+      onClick={handleClick}
+      disabled={!isLoggedIn}
       style={{
         marginTop: '0.5rem',
-        padding: '0.4rem 0.8rem',
-        backgroundColor: added ? '#ccc' : '#007bff',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer'
+        padding: '0.6rem 1rem',
+        fontWeight: 'bold',
+        border: '2px solid',
+        borderColor: added ? '#dc3545' : '#0056b3',
+        backgroundColor: added ? '#f8f9fa' : '#ffffff',
+        color: added ? '#dc3545' : '#0056b3',
+        borderRadius: '6px',
+        cursor: isLoggedIn ? 'pointer' : 'not-allowed',
+        transition: 'all 0.3s ease'
+      }}
+      onMouseEnter={e => {
+        e.target.style.backgroundColor = added ? '#e9ecef' : '#cce5ff';
+      }}
+      onMouseLeave={e => {
+        e.target.style.backgroundColor = added ? '#f8f9fa' : '#ffffff';
       }}
     >
-      {added ? '★ Added' : '☆ Add to Favorites'}
+      {added ? '★ Added — Click to Remove' : '☆ Add to Favorites'}
     </button>
   );
 }
