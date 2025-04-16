@@ -1,0 +1,126 @@
+/* Global settings for spacing and card styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212; /* Dark background */
+  color: white;
+}
+
+/* MVP Card */
+.bg-gray-800 {
+  background-color: #1f1f1f; /* Dark background color */
+  border: 2px solid #fff; /* White border for the card */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-xl {
+  font-size: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.mt-12 {
+  margin-top: 3rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.rounded-lg {
+  border-radius: 10px;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Title */
+.header-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Center content more */
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+/* Last Played Games Section Card */
+.games-card {
+  background-color: #1f1f1f;
+  border: 2px solid #fff; /* White border for the games card */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #333;
+}
+
+tr:hover {
+  background-color: #444;
+}
+
+tr:nth-child(even) {
+  background-color: #1e1e1e;
+}
+
+.mvp-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mvp-card img {
+  margin: 0 auto;
+}

@@ -1,0 +1,36 @@
+// utils/teamLogos.js
+const teamLogos = {
+    atl: "atlanta_hawks.png",
+    bos: "boston_celtics.png",
+    bkn: "brooklyn_nets.png",
+    cha: "charlotte_hornets.png",
+    chi: "chicago_bulls.png",
+    cle: "cleveland_cavaliers.png",
+    dal: "dallas_mavericks.png",
+    den: "denver_nuggets.png",
+    det: "detroit_pistons.png",
+    gsw: "golden_state_warriors.png",
+    hou: "houston_rockets.png",
+    ind: "indiana_pacers.png",
+    lac: "la_clippers.png",
+    lal: "los_angeles_lakers.png",
+    mem: "memphis_grizzlies.png",
+    mia: "miami_heat.png",
+    mil: "milwaukee_bucks.png",
+    min: "minnesota_timberwolves.png",
+    nop: "new_orleans_pelicans.png",
+    nyk: "new_york_knicks.png",
+    okc: "oklahoma_city_thunder.png",
+    orl: "orlando_magic.png",
+    phi: "philadelphia_76ers.png",
+    phx: "phoenix_suns.png",
+    por: "portland_trail_blazers.png",
+    sac: "sacramento_kings.png",
+    sas: "san_antonio_spurs.png",
+    tor: "toronto_raptors.png",
+    uta: "utah_jazz.png",
+    was: "washington_wizards.png",
+  };
+  
+  export default teamLogos;
+  
